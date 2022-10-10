@@ -17,9 +17,24 @@ function DetailPage(props) {
     let [hidden, setHidden] = useState(false)
 
     useEffect(()=>{
-        setTimeout(()=>(setHidden(true)),2000)
-        console.log('안녕')
-    })
+        let a = setTimeout(()=>(setHidden(true)),2000)
+        console.log(2)
+        
+        // return 사용가능
+        // useEffect 동작 전에 실행되는 return()=>{}
+        // 까먹고 초기화 하면 타이머 몇백개 생길 수 있음
+        return ()=>{
+            // 기존 타이머는 제거해주세요 ( clean up function)
+            // or 기존 데이터 요청은 제거해 주세요
+            // 버그완화 방지용
+            console.log(1)
+            clearTimeout(a)
+        }
+    },
+    // useEffect 실행조건을 넣을 수 있는곳, Dependency
+    // [count] 면 count가 변경 될 때만 실행 함
+    // 편법: 컴포넌트 mount시 1회만 실행하고 싶으면 이렇게 []
+    [])
     
 
     const { id } = useParams();

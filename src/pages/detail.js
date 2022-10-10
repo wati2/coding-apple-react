@@ -1,22 +1,26 @@
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components'
-
-// styled-components 장점
-// 스타일이 다른 js 파일로 오염되지 않음
-// props로 컴포넌트 재활용 가능
-// 단점 JS파일 매우 복잡해짐
-// 스타일 재사용인 경우 import 할 텐데 CSS와 다를바가 없군..
-// CSS 담당의 숙련도 이슈
-let YellowBtn = styled.button`
-    background: ${ props => props.bg };
-    color: black;
-    padding: 10px;
-`
-
 
 
 // 전달할 수 있는 데이터는 props에서 전달 상위에서 한번에 관리하기 좋음
 function DetailPage(props) {
+
+    // use어쩌고는 Hook임
+    // mount, update 될 때 코드 실행해주는 useEffect
+    // update 시? 재 렌더링 되는 경우에
+    // useEffect 안에 있는 코드는 html 렌더링 이후에 동작합니다
+    // 먼저 html을 보여줘서 빠른 페이지 로딩느낌을 줄 수 있음, 사용자에게 중요하지 않은 연산인 경우도 있으니
+    // 서버에서 데이터 가져오는 작업, 타이머 장착하는 것 등
+    // 왜 이름이 Effect 어쩌구? Side Effect에서 따옴: 함수의 핵심기능과 상관없는 기능, 부가기능
+    let [count, setCount] = useState(0)
+    let [hidden, setHidden] = useState(false)
+
+    useEffect(()=>{
+        setTimeout(()=>(setHidden(true)),2000)
+        console.log('안녕')
+    })
+    
 
     const { id } = useParams();
 
@@ -25,7 +29,10 @@ function DetailPage(props) {
 
     return (
         <div className="container">
-            <YellowBtn bg='blue'>Btn</YellowBtn>
+            {hidden? null : <div className="alert alert-warning">
+                2초 이내 구매시 할인
+            </div>}
+            <button onClick={()=>setCount(++count)}>count:{count}</button>
             <div className="row">
                 <div className="col-md-6">
                     <img src={`https://codingapple1.github.io/shop/shoes${1 + parseInt(id)}.jpg`} alt='ShoeImg' width="100%" />

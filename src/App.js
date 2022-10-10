@@ -3,6 +3,7 @@ import { Container, Nav, Navbar } from 'react-bootstrap';
 import { useState } from 'react';
 import data from './data.js'
 import { Routes, Route, Link } from 'react-router-dom'
+import DetailPage from './pages/detail'
 
 function App() {
 
@@ -41,7 +42,7 @@ function App() {
         } />
 
         {/* Detail 페이지 */}
-        <Route path="/detail" element={<div>상세페이지임</div>} />
+        <Route path="/detail" element={<DetailPage/>} />
       </Routes>
       
     </div>

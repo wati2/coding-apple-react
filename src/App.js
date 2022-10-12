@@ -8,9 +8,11 @@ import axios from 'axios'
 
 function App() {
 
-  let [shoes,setShoes] = useState(data)
-  // hook
-  let navigate = useNavigate();
+  let [shoes,setShoes] = useState(data);
+  let [countClick, setCountClick] = useState(0);
+  let [loadingTextVisible, setLoadingTextVisible] = useState(false)
+
+  let navigate = useNavigate(); // hook
   
 
   return (
@@ -41,14 +43,22 @@ function App() {
                 {shoes.map((shoe,i)=>(<ItemCard title={shoe.title} price={shoe.price} imageNum={i} />))}
               </div>
             </div>
+            {loadingTextVisible ? <LoadingText /> : null}
             <button onClick={()=>{
-              axios.get('https://codingapple1.github.io/shop/data2.json')
+              setCountClick(++countClick);
+              // 로딩중UI 띄우기~
+              console.log(countClick);
+              setLoadingTextVisible(true)
+              axios.get(`https://codingapple1.github.io/shop/data${(countClick+1).toString()}.json`)
               .then((response)=>{
                 console.log(response.data)
                 let copy = [...shoes, ...response.data]
                 setShoes(copy);
+                // 로딩중UI 숨기기~
+                setLoadingTextVisible(false)
               })
               .catch(()=>{
+                // 로딩중UI 숨기기~
                 console.log('실패함ㅅㄱ')
               })
               
@@ -102,6 +112,14 @@ function DailyEvent() {
     <div>
       <h4>오늘의 이벤트</h4>
       <Outlet></Outlet>
+    </div>
+  )
+}
+
+function LoadingText() {
+  return (
+    <div>
+      <p>로딩중 입니다</p>
     </div>
   )
 }

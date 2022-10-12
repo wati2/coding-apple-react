@@ -18,8 +18,8 @@ function DetailPage(props) {
   let [탭, 탭변경] = useState(0)
 
   useEffect(() => {
-    let a = setTimeout(() => (setHidden(true)), 2000)
-    console.log(2)
+    let timer = setTimeout(() => (setHidden(true)), 2000)
+    let timerFade = setTimeout(()=>{ setFade('end') }, 100)
 
     // return 사용가능
     // useEffect 동작 전에 실행되는 return()=>{}
@@ -28,8 +28,9 @@ function DetailPage(props) {
       // 기존 타이머는 제거해주세요 ( clean up function)
       // or 기존 데이터 요청은 제거해 주세요
       // 버그완화 방지용
-      console.log(1)
-      clearTimeout(a)
+      clearTimeout(timer)
+      clearTimeout(timerFade)
+      setFade('')
     }
   },
     // useEffect 실행조건을 넣을 수 있는곳, Dependency
@@ -37,14 +38,12 @@ function DetailPage(props) {
     // 편법: 컴포넌트 mount시 1회만 실행하고 싶으면 이렇게 []
     [])
 
-
   const { id } = useParams();
-
   const found = props.shoes.find(item => item.id == id);
-
+  let [fade, setFade] = useState('')
 
   return (
-    <div className="container">
+    <div className={`container start ${fade}`}>
       {hidden ? null : <div className="alert alert-warning">
         2초 이내 구매시 할인
       </div>}

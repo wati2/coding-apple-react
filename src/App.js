@@ -1,14 +1,19 @@
 import './App.css';
 import { Container, Nav, Navbar } from 'react-bootstrap';
-import { useState } from 'react';
+import { createContext, useState } from 'react';
 import data from './data.js'
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
 import DetailPage from './pages/detail'
 import axios from 'axios'
 
+// context는 그냥 state 보관함
+export let Context1 = createContext()
+
+
 function App() {
 
   let [shoes,setShoes] = useState(data);
+  let [재고] = useState([10, 11, 12]);
   let [countClick, setCountClick] = useState(0);
   let [loadingTextVisible, setLoadingTextVisible] = useState(false)
 
@@ -61,13 +66,16 @@ function App() {
                 // 로딩중UI 숨기기~
                 console.log('실패함ㅅㄱ')
               })
-              
             }}>Btn</button>
           </>
         } />
 
         {/* Detail 페이지, URL 파라미터 */}
-        <Route path="/detail/:id" element={<DetailPage shoes={shoes} />} />
+        <Route path="/detail/:id" element={
+          <Context1.Provider value={{ 재고, shoes }}>
+            <DetailPage shoes={shoes} />
+          </Context1.Provider>
+        }/>
 
         {/* About */}
         <Route path='/about' element={<About/>}>

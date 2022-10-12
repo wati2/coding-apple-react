@@ -1,19 +1,18 @@
 import './App.css';
 import { Container, Nav, Navbar } from 'react-bootstrap';
-import { createContext, useState } from 'react';
+import { useState } from 'react';
 import data from './data.js'
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
 import DetailPage from './pages/detail'
 import axios from 'axios'
+import Cart from './pages/cart.js'
 
 // context는 그냥 state 보관함
-export let Context1 = createContext()
 
 
 function App() {
 
   let [shoes,setShoes] = useState(data);
-  let [재고] = useState([10, 11, 12]);
   let [countClick, setCountClick] = useState(0);
   let [loadingTextVisible, setLoadingTextVisible] = useState(false)
 
@@ -72,10 +71,11 @@ function App() {
 
         {/* Detail 페이지, URL 파라미터 */}
         <Route path="/detail/:id" element={
-          <Context1.Provider value={{ 재고, shoes }}>
             <DetailPage shoes={shoes} />
-          </Context1.Provider>
         }/>
+
+        <Route path='/cart' element={<Cart />} />
+
 
         {/* About */}
         <Route path='/about' element={<About/>}>

@@ -1,7 +1,13 @@
 // component 파일은 대문자 로 시작하는것이 암묵적인룰같은? 이미만들었으니 그냥 함
 import {Table} from 'react-bootstrap'
+import { useSelector } from 'react-redux'
 
 function Cart(){
+
+  // redux Store 가져와줌
+  // 전체 state에서 user만 꺼내서 return 가능
+  let cart = useSelector((state)=> state.cart )
+
   return (
     <div>
       <Table>
@@ -14,12 +20,14 @@ function Cart(){
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>안녕</td>
-            <td>안녕</td>
-            <td>안녕</td>
-          </tr>
+          {cart.map((info,idx) =>{return (
+            <tr key={info.id}>
+              <td>{info.id}</td>
+              <td>{info.name}</td>
+              <td>{info.count}</td>
+              <td>-</td>
+            </tr>)
+          })}
         </tbody>
       </Table> 
     </div>

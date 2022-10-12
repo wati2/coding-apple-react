@@ -4,6 +4,7 @@ import { useState } from 'react';
 import data from './data.js'
 import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
 import DetailPage from './pages/detail'
+import axios from 'axios'
 
 function App() {
 
@@ -25,7 +26,6 @@ function App() {
           </Nav>
         </Container>
       </Navbar>
-
       <Link to="/">홈</Link>
       <Link to="/detail">상세</Link>
 
@@ -36,16 +36,28 @@ function App() {
           <>
             <div className="main-bg"></div>
             <div className="container">
-            <div className="row">
-              {/* return 생략 case */}
-              {shoes.map((shoe,i)=>(<ItemCard title={shoe.title} price={shoe.price} imageNum={i} />))}
+              <div className="row">
+                {/* return 생략 case */}
+                {shoes.map((shoe,i)=>(<ItemCard title={shoe.title} price={shoe.price} imageNum={i} />))}
+              </div>
             </div>
-            </div>
+            <button onClick={()=>{
+              axios.get('https://codingapple1.github.io/shop/data2.json')
+              .then((response)=>{
+                console.log(response.data)
+              })
+              .catch(()=>{
+                console.log('실패함ㅅㄱ')
+              })
+              
+            }}>Btn</button>
           </>
         } />
 
-        {/* Detail 페이지 */}
-        <Route path="/detail" element={<DetailPage/>} />
+        {/* Detail 페이지, URL 파라미터 */}
+        <Route path="/detail/:id" element={<DetailPage shoes={shoes} />} />
+
+        {/* About */}
         <Route path='/about' element={<About/>}>
           <Route path='member' element={<div>멤버임</div>} />
           <Route path='location' element={<div>위치정보임</div>} />

@@ -78,16 +78,31 @@ function DetailPage(props) {
   )
 }
 
-function TabContent(props){
-  if (props.탭 == 0){
-    return <div>내용0 {props.탭}</div>
-  }
-  if (props.탭 == 1){
-    return <div>내용1</div>
-  }
-  if (props.탭 == 2){
-    return <div>내용2</div>
-  }
+// props보다 사용할 변수를 미리 알수 있어서 훨씬 직관적임
+function TabContent({탭}){
+
+  let [fade,setFade] = useState('')
+
+  useEffect(()=>{
+
+    // 부가설명: v18부터 리액트의 automatic batching 기능
+    // 마지막에 재랜더링 한번 해줌 (미리 결과를 OR 연한 해서 수행해버림, 그래서 타이머 넣어줌)
+    // 그리고 타이머니까 클린업 해도됌
+    let forCleanUp = setTimeout(()=>{ setFade('end') }, 100)
+
+    // CleanUp function
+    // useEffect 실행전에 뭐 특정 코드 실행하고 싶을때 사용하면 됨.
+    return ()=>{
+      clearTimeout(forCleanUp)
+      setFade('')
+    }
+  }, [탭])
+
+  return (
+    <div className={`start ${fade}`}>
+      { [<div>내용0</div>, <div>내용1</div>, <div>내용2</div>][탭] }
+    </div>
+  )
 }
 
 

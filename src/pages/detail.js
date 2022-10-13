@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Nav } from 'react-bootstrap';
+import { Nav, Table } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
-
+import { useDispatch, useSelector } from 'react-redux'
+import { addItem } from './../store.js'
 
 // 전달할 수 있는 데이터는 props에서 전달 상위에서 한번에 관리하기 좋음
 function DetailPage(props) {
@@ -17,6 +18,10 @@ function DetailPage(props) {
   let [count, setCount] = useState(0)
   let [hidden, setHidden] = useState(false)
   let [탭, 탭변경] = useState(0)
+
+  let cart = useSelector((state)=> state.cart)
+  let dispatch = useDispatch() // store.js로 요청보내주는 함수임
+
 
   useEffect(() => {
     let timer = setTimeout(() => (setHidden(true)), 2000)
@@ -58,7 +63,10 @@ function DetailPage(props) {
           <h4 className="pt-5">{found.title}</h4>
           <p>{found.content}</p>
           <p>{found.price}원</p>
-          <button className="btn btn-danger">주문하기</button>
+          {/* 음 주문시, 항목없으면 새로 추가 있으면 add count */}
+          <button className="btn btn-danger" onClick={()=>{
+            dispatch(addItem(found))
+          }}>주문하기</button>
         </div>
       </div>
 
@@ -75,6 +83,26 @@ function DetailPage(props) {
       </Nav>
       
       <TabContent 탭={탭} />
+      <br></br>
+      <Table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>상품명</th>
+            <th>수량</th>
+            <th>변경하기</th>
+          </tr>
+        </thead>
+        <tbody>
+          {cart.map((info,idx) =>{return (
+            <tr key={idx}>
+              <td>{info.id}</td>
+              <td>{info.name}</td>
+              <td>{info.count}</td>
+            </tr>)
+          })}
+        </tbody>
+      </Table> 
     </div>
   )
 }

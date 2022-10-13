@@ -8,7 +8,7 @@ function Cart(){
 
   // redux Store 가져와줌
   // 전체 state에서 user만 꺼내서 return 가능
-  let cart = useSelector((state)=> state.cart )
+  let cart = useSelector((state)=> state.cart)
   let user = useSelector((state)=> state.user)
   let dispatch = useDispatch() // store.js로 요청보내주는 함수임
 
@@ -43,7 +43,7 @@ function Cart(){
               <td>{info.count}</td>
               <td>
                 <button onClick={()=>{
-                  dispatch(addCount(info.id))
+                  dispatch(addCount(info))
                 }}>+</button>
               </td>
             </tr>)

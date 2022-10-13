@@ -1,7 +1,6 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Nav } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
-import { Context1 } from './../App.js'
 
 
 // 전달할 수 있는 데이터는 props에서 전달 상위에서 한번에 관리하기 좋음
@@ -15,7 +14,6 @@ function DetailPage(props) {
   // 서버에서 데이터 가져오는 작업, 타이머 장착하는 것 등
   // 왜 이름이 Effect 어쩌구? Side Effect에서 따옴: 함수의 핵심기능과 상관없는 기능, 부가기능
   // 지금 보니까 Destrucuturing 쓰는 이유도 뭐랄까.. 어느정도 디버깅역할을 해주는 듯 함
-  let {재고} = useContext(Context1)
   let [count, setCount] = useState(0)
   let [hidden, setHidden] = useState(false)
   let [탭, 탭변경] = useState(0)
@@ -51,8 +49,6 @@ function DetailPage(props) {
         2초 이내 구매시 할인
       </div>}
       <button onClick={() => setCount(++count)}>count:{count}</button>
-      
-      {재고}
       
       <div className="row">
         <div className="col-md-6">

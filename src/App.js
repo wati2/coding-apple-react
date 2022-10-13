@@ -12,6 +12,14 @@ import Cart from './pages/cart.js'
 
 function App() {
 
+  let obj = {name : 'kim'}
+  localStorage.setItem('data', JSON.stringify(obj))
+  // let 꺼낸거 = localStorage.getItem('data')
+  // console.log(꺼낸거)
+  // JSON -> array/object 변환은 JSON.parse()
+  // console.log(JSON.parse(꺼낸거))
+
+
   let [shoes,setShoes] = useState(data);
   let [countClick, setCountClick] = useState(0);
   let [loadingTextVisible, setLoadingTextVisible] = useState(false)

@@ -44,7 +44,7 @@ function App() {
             <div className="container">
               <div className="row">
                 {/* return 생략 case */}
-                {shoes.map((shoe,i)=>(<ItemCard title={shoe.title} price={shoe.price} imageNum={i} />))}
+                {shoes.map((shoe,i)=>(<ItemCard key={i} title={shoe.title} price={shoe.price} imageNum={i} />))}
               </div>
             </div>
             {loadingTextVisible ? <LoadingText /> : null}

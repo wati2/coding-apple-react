@@ -40,7 +40,7 @@ function DetailPage(props) {
     [])
 
   const { id } = useParams();
-  const found = props.shoes.find(item => item.id == id);
+  const found = props.shoes.find(item => item.id.toString() === id);
   let [fade, setFade] = useState('')
 
   return (

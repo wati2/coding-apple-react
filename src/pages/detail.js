@@ -21,11 +21,17 @@ function DetailPage(props) {
 
   let cart = useSelector((state)=> state.cart)
   let dispatch = useDispatch() // store.js로 요청보내주는 함수임
-
+  const { id } = useParams();
+  const found = props.shoes.find(item => item.id.toString() === id);
 
   useEffect(() => {
     let timer = setTimeout(() => (setHidden(true)), 2000)
     let timerFade = setTimeout(()=>{ setFade('end') }, 100)
+    let watched = JSON.parse(localStorage.getItem('watched'))
+    watched ? watched.push(parseInt(found.id)) : watched = [parseInt(found.id)]
+    watched = [...new Set(watched)]
+    localStorage.setItem('watched', JSON.stringify(watched))
+    console.log(watched)
 
     // return 사용가능
     // useEffect 동작 전에 실행되는 return()=>{}
@@ -42,10 +48,8 @@ function DetailPage(props) {
     // useEffect 실행조건을 넣을 수 있는곳, Dependency
     // [count] 면 count가 변경 될 때만 실행 함
     // 편법: 컴포넌트 mount시 1회만 실행하고 싶으면 이렇게 []
-    [])
+  [])
 
-  const { id } = useParams();
-  const found = props.shoes.find(item => item.id.toString() === id);
   let [fade, setFade] = useState('')
 
   return (

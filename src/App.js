@@ -6,6 +6,7 @@ import { Routes, Route, Link, useNavigate, Outlet } from 'react-router-dom'
 import DetailPage from './pages/detail'
 import axios from 'axios'
 import Cart from './pages/cart.js'
+import WatchedItems from './components/WatchedItems';
 
 // context는 그냥 state 보관함
 
@@ -49,6 +50,7 @@ function App() {
         <Route path="/" element={
           <>
             <div className="main-bg"></div>
+            <WatchedItems shoes={shoes} />
             <div className="container">
               <div className="row">
                 {/* return 생략 case */}

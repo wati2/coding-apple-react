@@ -7,6 +7,7 @@ import DetailPage from './pages/detail'
 import axios from 'axios'
 import Cart from './pages/cart.js'
 import WatchedItems from './components/WatchedItems';
+import { useQuery } from '@tanstack/react-query'
 
 // context는 그냥 state 보관함
 
@@ -24,9 +25,20 @@ function App() {
   let [shoes,setShoes] = useState(data);
   let [countClick, setCountClick] = useState(0);
   let [loadingTextVisible, setLoadingTextVisible] = useState(false)
-
   let navigate = useNavigate(); // hook
+
+  // 장점1. 성공/실패/로딩중 쉽게 파악가능
+  let result = useQuery(['작명'], ()=>
+    axios.get('https://codingapple1.github.io/userdata.json')
+    .then((a)=>{ 
+      console.log('요청됨')
+      return a.data }),
+      { staleTime : 2000 }
+  )
   
+  // result.data 
+  // result.isLoading
+  // result.error
 
   return (
     <div className="App">
@@ -37,12 +49,13 @@ function App() {
           <Nav className="me-auto">
             {/* navigate(1) 앞으로한페이지, navigate(-1) 뒤로한페이지 */}
             <Nav.Link onClick={ ()=>{navigate('/')} }>Home</Nav.Link>
-            <Nav.Link onClick={ ()=>{navigate('/detail')} }>Detail</Nav.Link>
+            <Nav.Link onClick={ ()=>{navigate('/detail/0')} }>Detail</Nav.Link>
+            <Nav.Link onClick={ ()=>{navigate('/cart')} }>Cart</Nav.Link>
+            <Nav.Link >{ result.isLoading ? '로딩중' : result.data.name }</Nav.Link>
           </Nav>
         </Container>
       </Navbar>
-      <Link to="/">홈</Link>
-      <Link to="/detail">상세</Link>
+
 
       <Routes>
         {/* Route로 페이지 나눔 */}

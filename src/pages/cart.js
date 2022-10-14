@@ -14,6 +14,8 @@ let Child = memo(function(){
 })
 
 
+
+
 function Cart(){
 
   // redux Store 가져와줌

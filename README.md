@@ -1,4 +1,2 @@
-# Coding Apple React 
-
-## 수강 & 과제 & 기록
+## Coding Apple React - 과제 & 기록
 
